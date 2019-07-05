@@ -1,15 +1,16 @@
 const express = require('express');
 const morgan = require('morgan');
-
+const cors = require('cors');
 const app = express();
 
-const apps = require('./games-data.js');
-
+const games = require('./games-data.js');
+app.use(cors());
 app.use(morgan('common'));
+//app.use(morgan('dev'));
 
-app.get('/apps', (req, res) => {
+app.get('/games', (req, res) => {
     const { sort, genre } = req.query;
-    let results = apps;
+    let results = games;
 
     if(sort) {
         if(!['Rating', 'App'].includes(sort)) {
@@ -41,10 +42,14 @@ app.get('/apps', (req, res) => {
                     .Genres
                     .includes(genre));
     }
-
+//     if(genre) {
+//            results = results.filter(app => {return app.Genre.toLowerCase().includes(genre.toLowerCase())});
+//        }
     res
         .json(results)
             
 });
 
-module.exports = app;
+app.listen(8000, () => {
+    console.log('Server started on port 8000');
+})
