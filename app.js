@@ -6,7 +6,7 @@ const app = express();
 const games = require('./games-data.js');
 app.use(cors());
 app.use(morgan('common'));
-//app.use(morgan('dev'));
+
 
 app.get('/games', (req, res) => {
     const { sort, genre } = req.query;
@@ -42,9 +42,7 @@ app.get('/games', (req, res) => {
                     .Genres
                     .includes(genre));
     }
-//     if(genre) {
-//            results = results.filter(app => {return app.Genre.toLowerCase().includes(genre.toLowerCase())});
-//        }
+
     res
         .json(results)
             
@@ -53,3 +51,5 @@ app.get('/games', (req, res) => {
 app.listen(8000, () => {
     console.log('Server started on port 8000');
 })
+
+module.exports = app;
